@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+<meta charset="UTF-8">
+
+        <title>Hello jQuery</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    </head>
+
+        <script>
+		function getKurz(cur) {
+			var url = "http://localhost:1444/";
+			dname = "#" + cur + "date";
+			var d = $(dname).val();
+			var u = url + cur + "/" + d;
+            $.get(u, function( data ) {
+	            $('#' + cur).attr('value', data[cur]);
+            }).fail(function(data){
+				console.log(data);
+                $('#' + cur).attr('value', data.responseJSON['error']);
+			});
+
+		}
+		</script>
+    <body>
+	<form id="eurform">
+	  <input type="text" id="eurdate" value="">
+	  <input type="button" value="EUR to CZK" onclick='javascript: getKurz("eur");'>
+	  <input type="text" id="eur">
+	</form>
+	<form id="usdform">
+	  <input type="text" id="usddate" value="">
+	  <input type="button" value="USD to CZK" onclick='javascript: getKurz("usd");'>
+	  <input type="text" id="usd">
+	</form>
+    </body>
+</html>
